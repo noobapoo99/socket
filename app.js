@@ -1,13 +1,15 @@
 import { Server } from "socket.io";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config(); // Load environment variables
 
-const PORT = process.env.PORT; // Default to 4000 if PORT is not specified in the environment
+const PORT = process.env.PORT;
 
 const io = new Server({
   cors: {
-    origin: process.env.CLIENT_URL, // Access the CLIENT_URL variable
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST"], // Specify allowed HTTP methods
+    credentials: true, // Allow cookies to be sent if necessary
   },
 });
 
