@@ -1,8 +1,9 @@
 import { Server } from "socket.io";
-
 import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables from .env file
+
+const PORT = process.env.PORT; // Default to 4000 if PORT is not specified in the environment
 
 const io = new Server({
   cors: {
@@ -34,7 +35,9 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", ({ receiverId, data }) => {
     const receiver = getUser(receiverId);
-    io.to(receiver.socketId).emit("getMessage", data);
+    if (receiver) {
+      io.to(receiver.socketId).emit("getMessage", data);
+    }
   });
 
   socket.on("disconnect", () => {
@@ -42,4 +45,6 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("4000");
+io.listen(PORT, () => {
+  console.log(`Socket.io server running on port ${PORT}`);
+});
