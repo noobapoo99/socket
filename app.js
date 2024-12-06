@@ -7,7 +7,7 @@ const PORT = process.env.PORT;
 
 const io = new Server({
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: "https://estate-deployed.onrender.com",
     methods: ["GET", "POST"], // Specify allowed HTTP methods
     credentials: true, // Allow cookies to be sent if necessary
   },
